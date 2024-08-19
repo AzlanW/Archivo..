@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Virtual</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Biblioteca Virtual</h1>
+
+    <div class="search-section">
+        <h2>Buscar Libro</h2>
+        <input type="text" id="book-name" placeholder="Ingrese el nombre del libro">
+        <button onclick="searchBook()">Buscar</button>
+        <div id="book-info"></div>
+    </div>
+
+    <div class="search-section">
+        <h2>Buscar por Autor</h2>
+        <input type="text" id="author-name" placeholder="Ingrese el nombre del autor">
+        <button onclick="searchByAuthor()">Buscar</button>
+        <div id="author-books"></div>
+    </div>
+
+    <div class="add-book-section">
+        <h2>Nuevo Libro</h2>
+        <input type="text" id="new-book-name" placeholder="Nombre del libro">
+        <input type="text" id="new-book-author" placeholder="Autor">
+        <input type="text" id="new-book-editorial" placeholder="Editorial">
+        <input type="file" id="imageInput" accept="image/*">
+        <button onclick="addNewBook()">Añadir Libro</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
