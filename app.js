@@ -1,19 +1,18 @@
-// app.js
-
 // Configuración de Firebase
 const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_AUTH_DOMAIN",
-    projectId: "TU_PROJECT_ID",
-    storageBucket: "TU_STORAGE_BUCKET",
-    messagingSenderId: "TU_MESSAGING_SENDER_ID",
-    appId: "TU_APP_ID"
+  apiKey: "AIzaSyDib8u1QJUxEsyhrIAHctZGyQBqitvygPg",
+  authDomain: "biblioteca-65ac7.firebaseapp.com",
+  projectId: "biblioteca-65ac7",
+  storageBucket: "biblioteca-65ac7.appspot.com",
+  messagingSenderId: "1087611860323",
+  appId: "1:1087611860323:web:ced2f3e4c55d955d31cf56"
 };
 
 // Inicializar Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const storage = firebase.storage();
-const db = firebase.firestore();
+firebase.initializeApp(firebaseConfig);
+
+const storage = firebase.storage();  // Asegúrate de que esto está después de initializeApp
+const db = firebase.firestore();     // Asegúrate de que esto está después de initializeApp
 
 // Buscar libro por nombre
 function searchBook() {
