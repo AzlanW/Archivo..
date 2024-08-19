@@ -9,13 +9,15 @@
 <body>
     <h1>Biblioteca Virtual</h1>
 
-    <form id="formAgregar" enctype="multipart/form-data">
-        <input type="text" id="nombreLibro" name="nombre" placeholder="Nombre del libro" required>
-        <input type="text" id="autorLibro" name="autor" placeholder="Autor del libro" required>
-        <input type="text" id="editorialLibro" name="editorial" placeholder="Editorial del libro" required>
-        <input type="file" id="portadaLibro" name="portada" accept="image/*" required>
-        <button type="submit">Subir</button>
-    </form>
+    <section>
+        <form id="formAgregar" enctype="multipart/form-data">
+            <input type="text" id="nombreLibro" name="nombre" placeholder="Nombre del libro" required>
+            <input type="text" id="autorLibro" name="autor" placeholder="Autor del libro" required>
+            <input type="text" id="editorialLibro" name="editorial" placeholder="Editorial del libro" required>
+            <input type="file" id="portadaLibro" name="portada" accept="image/*" required>
+            <button type="submit">Subir</button>
+        </form>
+    </section>
 
     <div id="mensajeAgregar"></div>
 
