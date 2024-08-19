@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Virtual</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Biblioteca Virtual</h1>
+
+    <form id="formAgregar" enctype="multipart/form-data">
+        <input type="text" id="nombreLibro" name="nombre" placeholder="Nombre del libro" required>
+        <input type="text" id="autorLibro" name="autor" placeholder="Autor del libro" required>
+        <input type="text" id="editorialLibro" name="editorial" placeholder="Editorial del libro" required>
+        <input type="file" id="portadaLibro" name="portada" accept="image/*" required>
+        <button type="submit">Subir</button>
+    </form>
+
+    <div id="mensajeAgregar"></div>
+
+    <!-- Sección para buscar libros por nombre -->
+    <section>
+        <h2>Buscar Libros por Nombre</h2>
+        <input type="text" id="buscarNombre" placeholder="Nombre del libro">
+        <button onclick="buscarLibroPorNombre()">Buscar</button>
+        <div id="resultadoNombre"></div>
+    </section>
+
+    <!-- Sección para buscar libros por autor -->
+    <section>
+        <h2>Buscar Libros por Autor</h2>
+        <input type="text" id="buscarAutor" placeholder="Autor del libro">
+        <button onclick="buscarLibrosPorAutor()">Buscar</button>
+        <div id="resultadoAutor"></div>
+    </section>
+
+    <!-- Sección para buscar libros por editorial -->
+    <section>
+        <h2>Buscar Libros por Editorial</h2>
+        <input type="text" id="buscarEditorial" placeholder="Editorial del libro">
+        <button onclick="buscarLibrosPorEditorial()">Buscar</button>
+        <div id="resultadoEditorial"></div>
+    </section>
+
+    <!-- Importar el SDK de Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.3/firebase-storage.js"></script>
+
+    <!-- Importar el código de configuración de Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-storage.js";
+
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDzt3sdFc8Z19rw7ij5EVoOJJmAy3urpVk",
+            authDomain: "archivo-ba1f1.firebaseapp.com",
+            projectId: "archivo-ba1f1",
+            storageBucket: "archivo-ba1f1.appspot.com",
+            messagingSenderId: "1014533925026",
+            appId: "1:1014533925026:web:c48017cb7c99a8a7164ffb"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        document.getElementById('formAgregar').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const nombre = document.getElementById('nombreLibro').value;
+            const autor = document.getElementById('autorLibro').value;
+            const editorial = document.getElementById('editorialLibro').value;
+            const portada = document.getElementById('portadaLibro').files[0];
+
+            if (!portada) {
+                document.getElementById('mensajeAgregar').textContent = 'Por favor, elige una portada.';
+                return;
+            }
+
+            try {
+                // Subir la imagen a Firebase Storage
+                const storageRef = ref(storage, `uploads/${Date.now()}_${portada.name}`);
+                await uploadBytes(storageRef, portada);
+                const portadaURL = await getDownloadURL(storageRef);
+
+                // Agregar el libro a Firestore
+                await addDoc(collection(db, 'libros'), {
+                    nombre,
+                    autor,
+                    editorial,
+                    portada: portadaURL
+                });
+
+                document.getElementById('mensajeAgregar').textContent = 'Libro agregado con éxito!';
+                this.reset();
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('mensajeAgregar').textContent = 'Error al agregar libro.';
+            }
+        });
+    </script>
+
+    <script type="module" src="script.js"></script>
+
+</body>
+</html>
